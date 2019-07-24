@@ -1,6 +1,3 @@
-env:
-  global:
-    - CC_TEST_REPORTER_ID=441bcb3e2b09a99f3e686439e9dd966ea803f5f6606a0f8a99b26841756b918c
 language: node_js
 node_js:
   - 'stable'
@@ -9,13 +6,9 @@ services:
   - postgresql
 before_script:
   - psql -c 'CREATE DATABASE travis_ci_test;' -U postgres
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
 script:
   - npm test
 after_script:
   - npm run test-coverage
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 notifications:
   email: false
