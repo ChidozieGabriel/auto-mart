@@ -36,7 +36,7 @@ class JwtHandler {
 
       JwtHandler.verifyToken(token, (err, payload) => {
         if (err) {
-          throw new ErrorClass(err.message, 401);
+          throw new ErrorClass('Invalid authorization token', 401);
         }
 
         req.user = payload;

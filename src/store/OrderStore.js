@@ -50,10 +50,10 @@ class OrderStore {
     }
 
     const query1 = `
-    SELECT 
-      price_offered old_price_offered 
+    SELECT
+      price_offered old_price_offered
     FROM orders
-    WHERE 
+    WHERE
       id = $1
     AND
       user_id = $2
@@ -63,8 +63,8 @@ class OrderStore {
       throw new ErrorClass('Invalid input. Enter valid order id.');
     });
 
-    if (Object.keys(res1).length === 0) {
-      throw new ErrorClass('Order not found', 404);
+    if (!res1 || Object.keys(res1).length === 0) {
+      throw new ErrorClass('Order not found. Confirm that car id is cor', 404);
     }
 
     const query2 = `

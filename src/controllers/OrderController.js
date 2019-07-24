@@ -5,7 +5,6 @@ import ResultHandler from '../helpers/ResultHandler';
 class OrderController {
   static async create(req, res, next) {
     try {
-      console.log('ORDER:body:', req.body);
       const order = await OrderStore.create(req.user.id, req.body);
       const data = { ...order };
       ResultHandler.success(res, data, 201);
