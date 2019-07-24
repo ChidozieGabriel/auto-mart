@@ -5,6 +5,11 @@ class User {
       password: '123_abc',
     };
 
+    this.invalidEmailUser = {
+      email: 'ljdfjdj;',
+      password: '123_abc',
+    };
+
     this.unRegisteredUser = {
       email: 'unregisterede@mail.com',
       password: 'abc-123',
@@ -14,6 +19,11 @@ class User {
       email: 'jane@doe.com',
       password: 'janedoe',
     };
+  }
+
+  generateUser() {
+    const email = `${Date.now()}@gmail.com`;
+    return { ...this.user, email };
   }
 }
 

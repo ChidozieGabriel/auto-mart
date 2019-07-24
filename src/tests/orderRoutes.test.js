@@ -8,7 +8,8 @@ import Utils from './Utils';
 should();
 chai.use(chaiHTTP);
 const utils = new Utils(server);
-const { user } = new User();
+const aUser = new User();
+const user = aUser.generateUser();
 const { car } = new Car(0);
 const { order, orderWithInvalidCarId } = new Order();
 const apiV1 = '/api/v1';
@@ -30,9 +31,9 @@ describe('CAR ORDER ROUTES', () => {
             order.price_offered = 0.95 * price;
             done();
           })
-          .catch(err => done(err));
+          .catch(done);
       })
-      .catch(err => done(err));
+      .catch(done);
   });
 
   describe('POST /order/', () => {
@@ -47,7 +48,7 @@ describe('CAR ORDER ROUTES', () => {
           expect(res.body.status).to.eql(res.status);
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     it('should create a purchase order', (done) => {
@@ -72,7 +73,7 @@ describe('CAR ORDER ROUTES', () => {
           postedOrder = { ...data };
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     it('should throw error when the car-id is not valid', (done) => {
@@ -86,7 +87,7 @@ describe('CAR ORDER ROUTES', () => {
           expect(res.body.status).to.eql(res.status);
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
   });
 
@@ -125,7 +126,7 @@ describe('CAR ORDER ROUTES', () => {
 
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     xit("should not update when order's status does not read pending", () => {});

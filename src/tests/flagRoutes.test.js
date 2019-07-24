@@ -8,7 +8,8 @@ import Utils from './Utils';
 should();
 chai.use(chaiHTTP);
 const utils = new Utils(server);
-const { user } = new User();
+const aUser = new User();
+const user = aUser.generateUser();
 const { car } = new Car(0);
 const { flag, flagInvalidCarId } = new Flag();
 const apiV1 = '/api/v1';
@@ -26,9 +27,9 @@ describe('CAR FLAG ROUTES', () => {
             flag.car_id = res.body.data.id;
             done();
           })
-          .catch(err => done(err));
+          .catch(done);
       })
-      .catch(err => done(err));
+      .catch(done);
   });
 
   describe('POST /flag', () => {
@@ -43,7 +44,7 @@ describe('CAR FLAG ROUTES', () => {
           expect(res.body.status).to.eql(res.status);
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     it('should create a flag/report against a car', (done) => {
@@ -68,7 +69,7 @@ describe('CAR FLAG ROUTES', () => {
 
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     it('should throw error when the car-id is not valid', (done) => {
@@ -82,7 +83,7 @@ describe('CAR FLAG ROUTES', () => {
           expect(res.body.status).to.eql(res.status);
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
   });
 });
