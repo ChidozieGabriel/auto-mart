@@ -5,19 +5,13 @@ import DB from '../DB';
 import Utils from '../helpers/Utils';
 
 class CarStore {
-  static async create(
-    user_id,
-    {
-      state = 'new', status = 'available', price, manufacturer, model, body_type, image_url,
-    },
-  ) {
-    if (!(price && manufacturer)) {
-      throw new ErrorClass('Enter price and manufacturer');
-    }
-
-    const statusLowerCase = status.toLowerCase();
-    if (!(statusLowerCase === 'sold' || statusLowerCase === 'available')) {
-      throw new ErrorClass('Invalid status. Car status is either "sold" or "available"');
+  static async create(user_id, {
+    state, price, manufacturer, model, body_type, image_url,
+  }) {
+    if (!(price && manufacturer && state)) {
+      throw new ErrorClass(
+        'You must enter the price, manufacturer, and state("new", "used") of the car',
+      );
     }
 
     const stateLowerCase = state.toLowerCase();
@@ -27,6 +21,7 @@ class CarStore {
 
     const id = uuid();
     const created_on = new Date();
+    const status = 'available';
     const query = `
       INSERT INTO cars(
         id, user_id, created_on, state, status, price, manufacturer, model, body_type, image_url
@@ -106,8 +101,9 @@ class CarStore {
       throw new ErrorClass('Invalid id');
     }
 
-    if (!status || (status !== 'available' && status !== 'sold')) {
-      throw new ErrorClass('invalid status');
+    const statusLowerCase = status.toLowerCase();
+    if (!(statusLowerCase === 'sold' || statusLowerCase === 'available')) {
+      throw new ErrorClass('Invalid status. Car status is either "sold" or "available"');
     }
 
     const query = `
