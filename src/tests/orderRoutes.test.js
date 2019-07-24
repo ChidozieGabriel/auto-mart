@@ -129,6 +129,29 @@ describe('CAR ORDER ROUTES', () => {
         .catch(done);
     });
 
+    it('should throw client-side error when order id is invalid', (done) => {
+      if (!postedOrder.id) {
+        throw Error('no posted order');
+      }
+
+      const newPrice = postedOrder.price_offered * 0.5;
+      const route = `${apiV1}/order/invalidid/price`;
+      const obj = { price_offered: newPrice };
+      utils
+        .patch(route, obj)
+        .then((res) => {
+          res.clientError.should.eql(true);
+          res.body.should.be.an('object');
+          res.body.should.have.property('error');
+
+          const { status } = res.body;
+          expect(status).to.eql(res.status);
+
+          done();
+        })
+        .catch(done);
+    });
+
     xit("should not update when order's status does not read pending", () => {});
   });
 });
