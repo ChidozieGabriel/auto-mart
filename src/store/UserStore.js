@@ -36,7 +36,14 @@ class UserStore {
     `;
     const hashedPassword = await bcrypt.hash(password, 10);
     const params = [id, created_on, email, firstname, lastname, address, String(hashedPassword)];
-    const res = await DB.query(query, params);
+    const res = await DB.query(query, params).catch((err) => {
+      switch (err.code) {
+        case '23505':
+          throw new ErrorClass('Email already exists');
+        default:
+          throw new ErrorClass('Invalid request body');
+      }
+    });
 
     return res;
   }

@@ -13,7 +13,8 @@ CREATE TABLE users
     address character varying(100),
     password character varying(512) NOT NULL,
     is_admin boolean,
-    CONSTRAINT users_pkey PRIMARY KEY (id)
+    CONSTRAINT users_pkey PRIMARY KEY (id),
+    CONSTRAINT users_email_key UNIQUE (email)
 );
 `;
 
