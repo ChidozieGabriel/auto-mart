@@ -10,7 +10,9 @@ import Utils from './Utils';
 should();
 chai.use(chaiHTTP);
 const utils = new Utils(server);
-const { user, anotherUser } = new User();
+const aUser = new User();
+const user = aUser.generateUser();
+const anotherUser = aUser.generateUser();
 const { car, carWithImage, randomCars } = new Car();
 const apiV1 = '/api/v1';
 let postedCar = {};
@@ -44,7 +46,7 @@ describe('CAR ROUTES "/car"', () => {
           },
         );
       })
-      .catch(err => done(err));
+      .catch(done);
   });
 
   describe('POST /car', () => {
@@ -67,7 +69,7 @@ describe('CAR ROUTES "/car"', () => {
 
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     it('should upload car image', (done) => {
@@ -109,7 +111,7 @@ describe('CAR ROUTES "/car"', () => {
           expect(carStatus).to.eql(statusObj.status);
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     it('should throw error when status is not valid ', (done) => {
@@ -125,7 +127,7 @@ describe('CAR ROUTES "/car"', () => {
           expect(status).to.eql(res.status);
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     it('should throw error when car update is not done by owner', (done) => {
@@ -148,11 +150,11 @@ describe('CAR ROUTES "/car"', () => {
                   assert.notEqual(res1.body.data.status, statusObj.status);
                   done();
                 })
-                .catch(err => done(err));
+                .catch(done);
             })
-            .catch(err => done(err));
+            .catch(done);
         })
-        .catch(err => done(err));
+        .catch(done);
     });
   });
 
@@ -178,7 +180,7 @@ describe('CAR ROUTES "/car"', () => {
 
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     it('should throw error when price is not a valid number', (done) => {
@@ -195,7 +197,7 @@ describe('CAR ROUTES "/car"', () => {
           expect(status).to.eql(res.status);
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     it('should only update the price of a car by its owner', (done) => {
@@ -220,11 +222,11 @@ describe('CAR ROUTES "/car"', () => {
                   assert.notEqual(res1.body.data.price, newPrice);
                   done();
                 })
-                .catch(err => done(err));
+                .catch(done);
             })
-            .catch(err => done(err));
+            .catch(done);
         })
-        .catch(err => done(err));
+        .catch(done);
     });
   });
 
@@ -243,7 +245,7 @@ describe('CAR ROUTES "/car"', () => {
           expect(owner).to.eql(postedCar.owner);
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
 
     it('should throw error if id is not valid', (done) => {
@@ -258,7 +260,7 @@ describe('CAR ROUTES "/car"', () => {
           expect(status).to.eql(res.status);
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
   });
 
@@ -277,7 +279,7 @@ describe('CAR ROUTES "/car"', () => {
           expect(data).to.satisfy(cars => cars.every(eachCar => eachCar.status === 'available'));
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
   });
 
@@ -304,7 +306,7 @@ describe('CAR ROUTES "/car"', () => {
 
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
   });
 
@@ -325,9 +327,9 @@ describe('CAR ROUTES "/car"', () => {
               expect(res1.body.data).to.satisfy(cars => cars.some(c => c.id !== postedCar.id));
               done();
             })
-            .catch(err => done(err));
+            .catch(done);
         })
-        .catch(err => done(err));
+        .catch(done);
     });
   });
 
@@ -350,7 +352,7 @@ describe('CAR ROUTES "/car"', () => {
 
           done();
         })
-        .catch(err => done(err));
+        .catch(done);
     });
   });
 });

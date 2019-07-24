@@ -16,6 +16,8 @@ class ResultHandler {
       console.log(err);
     }
 
+    if (status === 400) console.log(err);
+
     res.status(status).json({
       success: false,
       status,
